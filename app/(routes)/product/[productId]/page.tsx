@@ -6,6 +6,7 @@ import Gallery from "@/components/gallery";
 import Container from "@/components/ui/Container";
 import { FC } from "react";
 
+export const revalidate = 0
 export interface ProductPageProps {
   params: {
     productId: string;
