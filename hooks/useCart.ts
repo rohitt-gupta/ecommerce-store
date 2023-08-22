@@ -16,7 +16,7 @@ const useCart = create(
     items: [],
     addItem: (data: Product) => {
       const currentItems = get().items;
-      const existingItems: Product[] = currentItems.filter((item) => item.id === data.id)
+      const existingItems = currentItems.find((item) => item.id === data.id)
 
       if (existingItems) {
         return toast("Item already in cart.")
@@ -35,3 +35,5 @@ const useCart = create(
     storage: createJSONStorage(() => localStorage)
   })
 )
+
+export default useCart
