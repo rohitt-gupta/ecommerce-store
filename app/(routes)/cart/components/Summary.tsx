@@ -17,6 +17,12 @@ const Summary = () => {
   const items = useCart((state) => state.items);
   const removeAll = useCart((state) => state.removeAll);
 
+  /**
+   * this use effect runs whenever the searchParams changes
+   * first check inthe url if tere are any query with success as a parameter, i.e , do we have "{url}?success=somerandomvalue"
+   * if yes then payment is completed so clear the cart.
+   * otherwise if searchparams is cancelled then something went wrong.
+   */
   useEffect(() => {
     if (searchParams.get('success')) {
       toast.success('Payment completed.');
@@ -32,6 +38,12 @@ const Summary = () => {
     return total + Number(item.price)
   }, 0);
 
+  /**
+   * onCheckout click we will call the api /checkout provided by the administrator and send the productIds to the api.
+   * also the same api will return response and the response will have the url.
+   * after this function we add the url to the search params and use effect will be 
+   * called then the check will happen and accoring to that we will toast out the result.
+   */
   const onCheckout = async () => {
     const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/checkout`, {
       productIds: items.map((item) => item.id)
